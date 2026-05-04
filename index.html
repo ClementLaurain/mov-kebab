@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Mov Kebab – Kebab artisanal à Marlhenheim, Alsace. Viande fraîche, sauces maison, recettes authentiques.">
+<link rel="icon" type="image/png" href="logo.png">
+<title>Mov Kebab – Marlhenheim</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --rouge: #E8320A;
+    --rouge-fonce: #B52800;
+    --jaune: #F5A623;
+    --jaune-clair: #FFF3DC;
+    --noir: #1A1008;
+    --brun: #3B2000;
+    --gris: #888;
+    --blanc: #FFFFFF;
+    --creme: #FFF8EE;
+    --shadow: 0 20px 50px rgba(26,16,8,0.15);
+  }
+  body { font-family: 'Barlow', sans-serif; background: var(--creme); color: var(--brun); font-weight: 300; overflow-x: hidden; }
+  a { color: inherit; text-decoration: none; }
+  a:visited { color: inherit; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.75rem 3rem;
+    background: rgba(26,16,8,0.97);
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid var(--rouge);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 0.75rem; }
+  .nav-logo-text { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; color: var(--rouge); letter-spacing: 0.05em; }
+  .nav-logo-text span { color: var(--jaune); }
+  .logo-icon { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+  .nav-right { display: flex; align-items: center; gap: 1rem; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: rgba(255,255,255,0.7); font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--jaune); }
+  .lang-switcher select {
+    appearance: none; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.8); padding: 0.45rem 0.8rem; border-radius: 999px; font-size: 0.82rem; cursor: pointer;
+  }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+  .hamburger { display: none; background: rgba(255,255,255,0.08); border: none; font-size: 1.5rem; cursor: pointer; color: var(--blanc); padding: 0.5rem 0.75rem; border-radius: 0.5rem; }
+  .nav-links.open { display: flex !important; }
+
+  /* BOUTONS */
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--rouge); color: var(--blanc);
+    padding: 0.85rem 2rem; font-family: 'Barlow', sans-serif;
+    font-size: 0.82rem; letter-spacing: 0.15em; text-transform: uppercase;
+    font-weight: 600; border-radius: 4px; transition: background 0.2s, transform 0.2s;
+  }
+  .btn-primary:hover { background: var(--rouge-fonce); transform: translateY(-2px); }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: transparent; color: var(--blanc);
+    padding: 0.85rem 2rem; font-family: 'Barlow', sans-serif;
+    font-size: 0.82rem; letter-spacing: 0.15em; text-transform: uppercase;
+    font-weight: 600; border: 1px solid rgba(255,255,255,0.4); border-radius: 4px; transition: all 0.2s;
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+
+  a.btn-secondary {
+    color: white;
+  }
+  /* HERO */
+  .hero {
+    margin-top: 64px;
+    min-height: 90vh;
+    display: grid; grid-template-columns: 1fr 1.1fr;
+    background: var(--noir);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 60% 50%, rgba(232,50,10,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-left {
+    padding: 5rem 3rem 5rem 5rem;
+    display: flex; flex-direction: column; justify-content: center; gap: 1.25rem;
+    position: relative; z-index: 2;
+  }
+  .hero-eyebrow {
+    font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--jaune); display: flex; align-items: center; gap: 0.6rem;
+  }
+  .hero-eyebrow::before { content: ''; display: block; width: 2rem; height: 2px; background: var(--jaune); }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 7vw, 6rem);
+    line-height: 0.95; color: var(--blanc);
+    letter-spacing: 0.02em;
+  }
+  .hero-title em { color: var(--rouge); font-style: normal; }
+  .hero-subtitle { font-size: 1rem; color: rgba(255,255,255,0.55); line-height: 1.8; max-width: 420px; }
+  .hero-btns { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.5rem; }
+  .hero-badges { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.75rem; }
+  .hero-badge {
+    background: rgba(245,166,35,0.12); color: var(--jaune);
+    font-size: 0.72rem; padding: 0.5rem 1rem; border-radius: 4px;
+    text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600;
+    border: 1px solid rgba(245,166,35,0.2);
+  }
+  .hero-right { position: relative; overflow: hidden; }
+  .hero-right img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.7s ease; }
+  .hero-right:hover img { transform: scale(1.04); }
+  .hero-right-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, rgba(26,16,8,0.5) 0%, transparent 50%);
+  }
+
+  /* GALLERY STRIP */
+  .gallery-strip { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 0; }
+  .gallery-strip-cell { overflow: hidden; aspect-ratio: 1; }
+  .gallery-strip-cell img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s; }
+  .gallery-strip-cell:hover img { transform: scale(1.08); }
+
+  /* ABOUT */
+  .about { display: grid; grid-template-columns: 1fr 1fr; min-height: 450px; }
+  .about-img { overflow: hidden; }
+  .about-img img { width: 100%; height: 100%; object-fit: cover; }
+  .about-content {
+    padding: 4rem 5rem;
+    background: var(--brun); color: var(--creme);
+    display: flex; flex-direction: column; justify-content: center; gap: 1rem;
+  }
+  .about-eyebrow { font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--jaune); display: flex; align-items: center; gap: 0.6rem; }
+  .about-eyebrow::before { content: ''; display: block; width: 1.8rem; height: 2px; background: var(--jaune); }
+  .about-content h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 3vw, 3rem); color: var(--blanc); line-height: 1.05; letter-spacing: 0.04em; }
+  .about-content h2 em { color: var(--jaune); font-style: normal; }
+  .about-content p { color: rgba(255,248,238,0.65); line-height: 1.75; font-size: 0.9rem; }
+  .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 0.5rem; }
+  .stat { border-left: 3px solid var(--rouge); padding-left: 0.85rem; }
+  .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--rouge); letter-spacing: 0.04em; }
+  .stat-label { font-size: 0.72rem; color: rgba(255,248,238,0.45); letter-spacing: 0.1em; text-transform: uppercase; }
+
+  /* SECTIONS */
+  section.pad { padding: 4rem 5rem; }
+  .section-eyebrow { font-size: 0.7rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--rouge); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.6rem; }
+  .section-eyebrow::before { content: ''; display: block; width: 1.8rem; height: 2px; background: var(--rouge); }
+  .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 3.5vw, 3rem); color: var(--brun); line-height: 1; margin-bottom: 2rem; letter-spacing: 0.03em; }
+  .section-title em { color: var(--rouge); font-style: normal; }
+
+  /* SERVICES */
+  .services-section { background: var(--noir); }
+  .services-section .section-eyebrow { color: var(--jaune); }
+  .services-section .section-eyebrow::before { background: var(--jaune); }
+  .services-section .section-title { color: var(--blanc); }
+  .services-section .section-title em { color: var(--rouge); }
+  .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 1rem; }
+  .service-card {
+    background: rgba(255,255,255,0.04); padding: 2rem; border-radius: 8px;
+    text-align: center; border: 1px solid rgba(255,255,255,0.08);
+  }
+  .service-icon { font-size: 1.75rem; width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center; margin: 0 auto 1rem; background: rgba(232,50,10,0.15); }
+  .service-card h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--blanc); letter-spacing: 0.04em; }
+  .service-card p { font-size: 0.88rem; color: rgba(255,255,255,0.45); line-height: 1.7; }
+
+  /* MENU */
+  .menu-section { background: #F7EFE0; }
+  .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 1.25rem; }
+  .menu-card {
+    background: var(--blanc); display: flex; flex-direction: column; align-items: stretch;
+    border-radius: 8px; overflow: hidden; box-shadow: 0 12px 30px rgba(59,32,0,0.08);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .menu-card:hover { transform: translateY(-5px); box-shadow: 0 20px 45px rgba(59,32,0,0.14); }
+  .menu-card img { width: 100%; height: 220px; object-fit: cover; display: block; }
+  .menu-card-content { padding: 1.75rem; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 0.75rem; }
+  .menu-card-icon { font-size: 1.5rem; width: 50px; height: 50px; border-radius: 50%; background: rgba(232,50,10,0.07); display: flex; align-items: center; justify-content: center; }
+  .menu-card h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; color: var(--brun); letter-spacing: 0.04em; }
+  .menu-card p { font-size: 0.85rem; color: var(--gris); line-height: 1.65; }
+  .menu-link { margin-top: auto; font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--rouge); font-weight: 600; display: inline-flex; align-items: center; gap: 0.4rem; }
+  .menu-link::after { content: '→'; }
+  .menu-cta { text-align: center; margin-top: 2.5rem; }
+
+  /* HORAIRES */
+  .horaires-section { background: var(--noir); }
+  .h-eyebrow { font-size: 0.7rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--jaune); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.6rem; }
+  .h-eyebrow::before { content: ''; display: block; width: 1.8rem; height: 2px; background: var(--jaune); }
+  .h-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 3.5vw, 3rem); color: var(--blanc); line-height: 1; margin-bottom: 2rem; letter-spacing: 0.03em; }
+  .h-title em { color: var(--rouge); font-style: normal; }
+  .horaires-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; overflow: hidden; }
+  .horaire-row { display: flex; align-items: flex-start; justify-content: space-between; padding: 1rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.07); gap: 1rem; }
+  .jour { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--jaune); font-weight: 600; min-width: 85px; padding-top: 2px; }
+  .lieu { font-size: 0.82rem; color: rgba(255,248,238,0.5); line-height: 1.5; flex: 1; }
+  .heure { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; color: var(--blanc); white-space: nowrap; letter-spacing: 0.05em; }
+  .ferme { color: rgba(255,248,238,0.25); font-size: 0.82rem; font-style: italic; }
+
+  /* CONTACT */
+  .contact-section { background: var(--rouge); color: var(--blanc); }
+  .c-eyebrow { font-size: 0.7rem; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.6rem; }
+  .c-eyebrow::before { content: ''; display: block; width: 1.8rem; height: 1px; background: rgba(255,255,255,0.6); }
+  .c-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 3.5vw, 3rem); color: var(--blanc); line-height: 1; margin-bottom: 2rem; letter-spacing: 0.03em; }
+  .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 1.25rem; }
+  .contact-card { background: rgba(0,0,0,0.15); padding: 1.5rem; border-radius: 6px; border: 1px solid rgba(255,255,255,0.15); }
+  .contact-card h4 { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 0.6rem; font-weight: 600; }
+  .contact-card p, .contact-card a { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; color: var(--blanc); text-decoration: none; line-height: 1.55; letter-spacing: 0.04em; }
+  .paiement { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.4rem; }
+  .badge { background: rgba(255,255,255,0.15); color: var(--blanc); font-size: 0.68rem; padding: 0.25rem 0.65rem; border: 1px solid rgba(255,255,255,0.2); border-radius: 3px; font-weight: 600; letter-spacing: 0.08em; }
+  .social-row { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 2rem; }
+  .btn-outline-white { display: inline-flex; align-items: center; background: transparent; color: var(--blanc); padding: 0.65rem 1.5rem; font-size: 0.75rem; letter-spacing: 0.16em; text-transform: uppercase; border: 1px solid rgba(255,255,255,0.4); border-radius: 4px; transition: background 0.2s; font-family: 'Barlow', sans-serif; font-weight: 600; }
+  .btn-outline-white:hover { background: rgba(255,255,255,0.12); }
+
+  /* FOOTER */
+  footer { background: var(--noir); color: rgba(255,248,238,0.35); padding: 2rem 5rem; display: flex; align-items: center; justify-content: space-between; font-size: 0.75rem; flex-wrap: wrap; gap: 1rem; border-top: 2px solid rgba(232,50,10,0.3); }
+  .footer-logo-text { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; color: rgba(255,248,238,0.7); letter-spacing: 0.05em; }
+  .footer-links { display: flex; gap: 1.25rem; }
+  .footer-links a { color: rgba(255,248,238,0.35); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--jaune); }
+  .footer-credit a { color: var(--jaune); font-weight: 600; border-bottom: 1px solid var(--jaune); padding-bottom: 1px; transition: all 0.2s; }
+  .footer-credit a:hover { color: var(--blanc); border-bottom-color: var(--blanc); }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    nav { padding: 0.75rem 2rem; }
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 4rem 2rem 3rem 3rem; }
+    .hero-right { min-height: 350px; }
+    section.pad { padding: 3rem 2rem; }
+    .about { grid-template-columns: 1fr; }
+    .about-content { padding: 2.5rem 2rem; }
+    .about-img { height: 280px; }
+  }
+  @media (max-width: 768px) {
+    nav { padding: 0.75rem 1.5rem; flex-wrap: wrap; align-items: flex-start; gap: 0.5rem; }
+    .nav-logo { width: 100%; display: flex; align-items: center; justify-content: space-between; }
+    .nav-right { width: 100%; display: flex; align-items: center; justify-content: space-between; }
+    .hamburger { display: block; }
+    .nav-links { display: none; flex-direction: column; background: var(--noir); padding: 1rem 1.25rem; border-radius: 8px; box-shadow: var(--shadow); width: 100%; margin-top: 0.5rem; gap: 0; }
+    .nav-links.open { display: flex !important; }
+    .nav-links li { border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .nav-links li:last-child { border-bottom: none; }
+    .nav-links a { padding: 0.85rem 0; display: block; }
+    .hero { margin-top: 64px; }
+    .hero-left { padding: 2rem 1.5rem; }
+    .hero-right { min-height: 280px; }
+    .gallery-strip { grid-template-columns: repeat(2, 1fr); }
+    section.pad { padding: 2.5rem 1.5rem; }
+    footer { padding: 1.5rem; flex-direction: column; text-align: center; }
+    .footer-links { justify-content: center; }
+  }
+  @media (max-width: 480px) {
+    .hero-left { padding: 1.5rem 1rem; }
+    .hero-title { font-size: clamp(2.5rem, 6vw, 4rem); }
+    .hero-btns { flex-direction: column; }
+    .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+    section.pad { padding: 2rem 1rem; }
+    .about-stats { grid-template-columns: 1fr; }
+    footer { padding: 1.25rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <img class="logo-icon" src="logo.png" alt="Mov Kebab Logo">
+    <div class="nav-logo-text">MOV <span>KEBAB</span></div>
+  </div>
+  <div class="nav-right">
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">☰</button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#about" data-i18n="nav.about">À propos</a></li>
+      <li><a href="#menu" data-i18n="nav.menu">Menu</a></li>
+      <li><a href="#horaires" data-i18n="nav.schedule">Horaires</a></li>
+      <li><a href="#contact" data-i18n="nav.reserve" style="color:var(--jaune);font-weight:600;">📞 Commander</a></li>
+    </ul>
+    <div class="lang-switcher">
+      <label for="language-select" class="sr-only">Langue</label>
+      <select id="language-select">
+        <option value="fr">FR</option>
+        <option value="en">EN</option>
+        <option value="de">DE</option>
+      </select>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow" data-i18n="hero.eyebrow">Kebab artisanal · Marlhenheim</div>
+    <h1 class="hero-title">
+      <span data-i18n="hero.title1">Le vrai</span><br>
+      <em data-i18n="hero.title2">KEBAB</em><br>
+      <span data-i18n="hero.title3">d'Alsace</span>
+    </h1>
+    <p class="hero-subtitle" data-i18n="hero.subtitle">Viande fraîche, sauces maison et pain grillé. Mov Kebab, c'est le goût authentique à Marlhenheim — rapide, généreux et fait avec passion.</p>
+    <div class="hero-btns">
+      <a href="tel:+33XXXXXXXXX" class="btn-primary" data-i18n="hero.call">📞 Commander</a>
+      <a href="menu.html" class="btn-secondary" data-i18n="hero.menu">Notre carte</a>
+    </div>
+    <div class="hero-badges">
+      <span class="hero-badge" data-i18n="hero.badge1">Sur place</span>
+      <span class="hero-badge" data-i18n="hero.badge2">À emporter</span>
+      <span class="hero-badge" data-i18n="hero.badge3">Service rapide</span>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="https://gral-gie.com/wp-content/uploads/2024/03/Doner-Kebab-Bazin.jpg" alt="Kebab Mov Kebab Marlhenheim"/>
+    <div class="hero-right-overlay"></div>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<div class="gallery-strip">
+  <div class="gallery-strip-cell"><img src="https://gral-gie.com/wp-content/uploads/2024/03/Doner-Kebab-Bazin.jpg" alt="Kebab viande"/></div>
+  <div class="gallery-strip-cell"><img src="https://www.micheldumas.com/wp-content/uploads/2025/06/FritesBelge-ezgif.com-jpg-to-webp-converter-scaled.webp" alt="Frites maison"/></div>
+  <div class="gallery-strip-cell"><img src="https://www.colisgastronomiques.com/medias/images/sauce-orientale-pour-restauration.jpg" alt="Sauce maison"/></div>
+  <div class="gallery-strip-cell"><img src="https://www.saucer.fr/wp-content/uploads/2025/02/sauce-kebab-1024x782.jpg" alt="Repas complet"/></div>
+</div>
+
+<!-- ABOUT -->
+<div class="about" id="about">
+  <div class="about-img">
+    <img src="https://www.gurkebab.com/wp-content/uploads/2025/06/Gur-Nos-engagement-qualite.webp" alt="Préparation kebab"/>
+  </div>
+  <div class="about-content">
+    <div class="about-eyebrow" data-i18n="about.eyebrow">Notre histoire</div>
+    <h2><span data-i18n="about.title1">Le goût</span> <em data-i18n="about.title2">authentique</em></h2>
+    <p data-i18n="about.text">Viande sélectionnée, épices choisies et recettes transmises avec soin. Chez Mov Kebab à Marlhenheim, chaque assiette est préparée avec le souci du détail et la fierté du fait maison.</p>
+    <div class="about-stats">
+      <div class="stat"><div class="stat-num">100%</div><div class="stat-label" data-i18n="about.stat1">Viande fraîche</div></div>
+      <div class="stat"><div class="stat-num">7j/7</div><div class="stat-label" data-i18n="about.stat2">Ouvert toute la semaine</div></div>
+      <div class="stat"><div class="stat-num">100%</div><div class="stat-label" data-i18n="about.stat3">Fait maison</div></div>
+      <div class="stat"><div class="stat-num">+5</div><div class="stat-label" data-i18n="about.stat4">Ans d'expérience</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services-section pad" id="services">
+  <div class="section-eyebrow" data-i18n="services.eyebrow">Nos services</div>
+  <h2 class="section-title"><span data-i18n="services.title1">Ce que nous</span> <em data-i18n="services.title2">proposons</em></h2>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">🥙</div>
+      <h3 data-i18n="services.card1.title">Kebab & Sandwichs</h3>
+      <p data-i18n="services.card1.text">Nos classiques : kebab au pain, assiette, sandwich — chacun généreusement garni.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🍟</div>
+      <h3 data-i18n="services.card2.title">Frites maison</h3>
+      <p data-i18n="services.card2.text">Frites croustillantes coupées et cuites sur place. La perfection du croque.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🥡</div>
+      <h3 data-i18n="services.card3.title">À emporter</h3>
+      <p data-i18n="services.card3.text">Commandez et récupérez votre repas en quelques minutes, emballage soigné.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🎉</div>
+      <h3 data-i18n="services.card4.title">Plateaux & groupes</h3>
+      <p data-i18n="services.card4.text">Commandes pour événements, anniversaires ou repas d'équipe — contactez-nous.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="menu-section pad" id="menu">
+  <div class="section-eyebrow" data-i18n="menu.eyebrow">Notre carte</div>
+  <h2 class="section-title"><span data-i18n="menu.title1">Nos</span> <em data-i18n="menu.title2">spécialités</em></h2>
+  <div class="menu-grid">
+    <div class="menu-card">
+      <img src="https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=600&q=80" alt="Kebabs"/>
+      <div class="menu-card-content">
+        <div class="menu-card-icon">🥙</div>
+        <h3 data-i18n="menu.card1.title">Kebabs</h3>
+        <p data-i18n="menu.card1.text">Pain, assiette, sandwich — bœuf, poulet ou mixte. Garnis, généreux, inoubliables.</p>
+        <a href="menu.html" class="menu-link" data-i18n="menu.card1.link">Voir le menu</a>
+      </div>
+    </div>
+    <div class="menu-card">
+      <img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&q=80" alt="Accompagnements"/>
+      <div class="menu-card-content">
+        <div class="menu-card-icon">🍟</div>
+        <h3 data-i18n="menu.card3.title">Accompagnements</h3>
+        <p data-i18n="menu.card3.text">Frites dorées, salade fraîche, sauces maison — tout ce qui complète le repas parfait.</p>
+        <a href="menu.html#Accompagnements" class="menu-link" data-i18n="menu.card3.link">Voir</a>
+      </div>
+    </div>
+  </div>
+  <div class="menu-cta">
+    <a href="menu.html" class="btn-primary" data-i18n="menu.cta">📄 Carte complète</a>
+  </div>
+</section>
+
+<!-- HORAIRES -->
+<section class="horaires-section pad" id="horaires">
+  <div class="h-eyebrow" data-i18n="hours.eyebrow">Nos horaires</div>
+  <h2 class="h-title"><span data-i18n="hours.title1">Quand nous</span> <em data-i18n="hours.title2">trouver</em></h2>
+  <div class="horaires-grid">
+    <div class="horaire-row">
+      <span class="jour" data-i18n="day.monday">Lundi</span>
+      <span class="lieu" data-i18n="location.monday">Marlhenheim – Rue Principale</span>
+      <span class="heure">11h30 – 14h · 18h – 22h</span>
+    </div>
+    <div class="horaire-row">
+      <span class="jour" data-i18n="day.tuesday">Mardi</span>
+      <span class="lieu" data-i18n="location.tuesday">Marlhenheim</span>
+      <span class="heure">11h30 – 14h · 18h – 22h</span>
+    </div>
+    <div class="horaire-row">
+      <span class="jour" data-i18n="day.wednesday">Mercredi</span>
+      <span class="lieu" data-i18n="location.wednesday">Marlhenheim</span>
+      <span class="heure">11h30 – 14h · 18h – 22h</span>
+    </div>
+    <div class="horaire-row">
+      <span class="jour" data-i18n="day.thursday">Jeudi</span>
+      <span class="lieu" data-i18n="location.thursday">Marlhenheim</span>
+      <span class="heure">11h30 – 14h · 18h – 22h</span>
+    </div>
+    <div class="horaire-row">
+      <span class="jour" data-i18n="day.friday">Vendredi</span>
+      <span class="lieu" data-i18n="location.friday">Marlhenheim</span>
+      <span class="heure">11h30 – 14h · 18h – 23h</span>
+    </div>
+    <div class="horaire-row">
+      <span class="jour" data-i18n="day.saturday">Samedi</span>
+      <span class="lieu" data-i18n="location.saturday">Marlhenheim</span>
+      <span class="heure">12h – 23h</span>
+    </div>
+    <div class="horaire-row">
+      <span class="jour" data-i18n="day.sunday">Dimanche</span>
+      <span class="lieu ferme" data-i18n="location.sunday">—</span>
+      <span class="heure ferme" data-i18n="hours.closed">Fermé</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section pad" id="contact">
+  <div class="c-eyebrow" data-i18n="contact.eyebrow">Nous contacter</div>
+  <h2 class="c-title" data-i18n="contact.title">Passez nous voir</h2>
+  <div class="contact-grid">
+    <div class="contact-card">
+      <h4 data-i18n="contact.phone">Téléphone</h4>
+      <p><a href="tel:+33XXXXXXXXX">+33 X XX XX XX XX</a></p>
+    </div>
+    <div class="contact-card">
+      <h4 data-i18n="contact.address">Adresse</h4>
+      <p data-i18n="contact.location1">1 Rue Griesmatt</p>
+      <p data-i18n="contact.location2">67520 Marlhenheim</p>
+    </div>
+    <div class="contact-card">
+      <h4 data-i18n="contact.payment">Paiement</h4>
+      <div class="paiement">
+        <span class="badge">Espèces</span>
+        <span class="badge">CB</span>
+        <span class="badge">Sans contact</span>
+      </div>
+    </div>
+  </div>
+  <div class="social-row">
+    <a href="#" class="btn-outline-white">📘 Facebook</a>
+    <a href="#" class="btn-outline-white">📸 Instagram</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo-text">MOV KEBAB · MARLHENHEIM</div>
+  <div class="footer-links">
+    <a href="#about">À propos</a>
+    <a href="#menu">Menu</a>
+    <a href="#horaires">Horaires</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="footer-credit">Site créé par <a href="https://clementlaurain.github.io/My-portfolio/">Clément Laurain</a></div>
+</footer>
+
+<script>
+const translations = {
+  fr: {
+    'nav.about': 'À propos', 'nav.menu': 'Menu', 'nav.schedule': 'Horaires', 'nav.reserve': '📞 Commander',
+    'hero.eyebrow': 'Kebab artisanal · Marlhenheim',
+    'hero.title1': 'Le vrai', 'hero.title2': 'KEBAB', 'hero.title3': "d'Alsace",
+    'hero.subtitle': "Viande fraîche, sauces maison et pain grillé. Mov Kebab, c'est le goût authentique à Marlhenheim — rapide, généreux et fait avec passion.",
+    'hero.call': '📞 Commander', 'hero.menu': 'Notre carte',
+    'hero.badge1': 'Sur place', 'hero.badge2': 'À emporter', 'hero.badge3': 'Service rapide',
+    'about.eyebrow': 'Notre histoire', 'about.title1': 'Le goût', 'about.title2': 'authentique',
+    'about.text': "Viande sélectionnée, épices choisies et recettes transmises avec soin. Chez Mov Kebab à Marlhenheim, chaque assiette est préparée avec le souci du détail et la fierté du fait maison.",
+    'about.stat1': 'Viande fraîche', 'about.stat2': 'Ouvert toute la semaine', 'about.stat3': 'Fait maison', 'about.stat4': "Ans d'expérience",
+    'services.eyebrow': 'Nos services', 'services.title1': 'Ce que nous', 'services.title2': 'proposons',
+    'services.card1.title': 'Kebabs & Sandwichs', 'services.card1.text': 'Nos classiques : kebab au pain, assiette, sandwich — chacun généreusement garni.',
+    'services.card2.title': 'Frites maison', 'services.card2.text': 'Frites croustillantes coupées et cuites sur place. La perfection du croque.',
+    'services.card3.title': 'À emporter', 'services.card3.text': 'Commandez et récupérez votre repas en quelques minutes, emballage soigné.',
+    'services.card4.title': 'Plateaux & groupes', 'services.card4.text': "Commandes pour événements, anniversaires ou repas d'équipe — contactez-nous.",
+    'menu.eyebrow': 'Notre carte', 'menu.title1': 'Nos', 'menu.title2': 'spécialités',
+    'menu.card1.title': 'Kebabs', 'menu.card1.text': "Pain, assiette, sandwich — bœuf, poulet ou mixte. Garnis, généreux, inoubliables.", 'menu.card1.link': 'Voir le menu',
+    'menu.card2.title': 'Burgers', 'menu.card2.text': 'Burgers maison avec steak frais, fromage fondu, sauces exclusives et légumes croquants.', 'menu.card2.link': 'Découvrir',
+    'menu.card3.title': 'Accompagnements', 'menu.card3.text': 'Frites dorées, salade fraîche, sauces maison — tout ce qui complète le repas parfait.', 'menu.card3.link': 'Voir',
+    'menu.cta': '📄 Carte complète',
+    'hours.eyebrow': 'Nos horaires', 'hours.title1': 'Quand nous', 'hours.title2': 'trouver',
+    'day.monday': 'Lundi', 'day.tuesday': 'Mardi', 'day.wednesday': 'Mercredi', 'day.thursday': 'Jeudi', 'day.friday': 'Vendredi', 'day.saturday': 'Samedi', 'day.sunday': 'Dimanche',
+    'location.monday': 'Marlhenheim – Rue Principale', 'location.tuesday': 'Marlhenheim', 'location.wednesday': 'Marlhenheim', 'location.thursday': 'Marlhenheim', 'location.friday': 'Marlhenheim', 'location.saturday': 'Marlhenheim', 'location.sunday': '—',
+    'hours.closed': 'Fermé',
+    'contact.eyebrow': 'Nous contacter', 'contact.title': 'Passez nous voir', 'contact.phone': 'Téléphone', 'contact.address': 'Adresse', 'contact.payment': 'Paiement',
+    'contact.location1': '1 Rue Griesmatt', 'contact.location2': '67520 Marlhenheim'
+  },
+  en: {
+    'nav.about': 'About', 'nav.menu': 'Menu', 'nav.schedule': 'Hours', 'nav.reserve': '📞 Order',
+    'hero.eyebrow': 'Artisan Kebab · Marlhenheim',
+    'hero.title1': 'The real', 'hero.title2': 'KEBAB', 'hero.title3': 'of Alsace',
+    'hero.subtitle': 'Fresh meat, homemade sauces and toasted bread. Mov Kebab is authentic taste in Marlhenheim — fast, generous and made with passion.',
+    'hero.call': '📞 Order', 'hero.menu': 'Our menu',
+    'hero.badge1': 'Dine in', 'hero.badge2': 'Takeaway', 'hero.badge3': 'Fast service',
+    'about.eyebrow': 'Our story', 'about.title1': 'The', 'about.title2': 'authentic taste',
+    'about.text': 'Selected meat, chosen spices and carefully passed-down recipes. At Mov Kebab in Marlhenheim, every plate is prepared with attention to detail and the pride of homemade food.',
+    'about.stat1': 'Fresh meat', 'about.stat2': 'Open all week', 'about.stat3': 'Homemade', 'about.stat4': 'Years of experience',
+    'services.eyebrow': 'Our services', 'services.title1': 'What we', 'services.title2': 'offer',
+    'services.card1.title': 'Kebabs & Sandwiches', 'services.card1.text': 'Our classics: kebab wrap, plate, sandwich — each one generously loaded.',
+    'services.card2.title': 'Homemade fries', 'services.card2.text': 'Crispy fries cut and cooked on site. The ultimate crunch.',
+    'services.card3.title': 'Takeaway', 'services.card3.text': 'Order and pick up your meal in minutes, neatly packaged.',
+    'services.card4.title': 'Group orders', 'services.card4.text': 'Orders for events, birthdays or team lunches — contact us.',
+    'menu.eyebrow': 'Our menu', 'menu.title1': 'Our', 'menu.title2': 'specialities',
+    'menu.card1.title': 'Kebabs', 'menu.card1.text': 'Wrap, plate, sandwich — beef, chicken or mixed. Loaded, generous, unforgettable.', 'menu.card1.link': 'See menu',
+    'menu.card2.title': 'Burgers', 'menu.card2.text': 'Homemade burgers with fresh steak, melted cheese, exclusive sauces and crunchy vegetables.', 'menu.card2.link': 'Discover',
+    'menu.card3.title': 'Sides', 'menu.card3.text': 'Golden fries, fresh salad, homemade sauces — everything that completes the perfect meal.', 'menu.card3.link': 'See',
+    'menu.cta': '📄 Full menu',
+    'hours.eyebrow': 'Our hours', 'hours.title1': 'When to', 'hours.title2': 'find us',
+    'day.monday': 'Monday', 'day.tuesday': 'Tuesday', 'day.wednesday': 'Wednesday', 'day.thursday': 'Thursday', 'day.friday': 'Friday', 'day.saturday': 'Saturday', 'day.sunday': 'Sunday',
+    'location.monday': 'Marlhenheim – Main Street', 'location.tuesday': 'Marlhenheim', 'location.wednesday': 'Marlhenheim', 'location.thursday': 'Marlhenheim', 'location.friday': 'Marlhenheim', 'location.saturday': 'Marlhenheim', 'location.sunday': '—',
+    'hours.closed': 'Closed',
+    'contact.eyebrow': 'Contact us', 'contact.title': 'Come visit us', 'contact.phone': 'Phone', 'contact.address': 'Address', 'contact.payment': 'Payment',
+    'contact.location1': '1 Rue Griesmatt', 'contact.location2': '67520 Marlhenheim'
+  },
+  de: {
+    'nav.about': 'Über uns', 'nav.menu': 'Speisekarte', 'nav.schedule': 'Öffnungszeiten', 'nav.reserve': '📞 Bestellen',
+    'hero.eyebrow': 'Handwerklicher Kebab · Marlhenheim',
+    'hero.title1': 'Der echte', 'hero.title2': 'KEBAB', 'hero.title3': 'aus dem Elsass',
+    'hero.subtitle': 'Frisches Fleisch, hausgemachte Soßen und geröstetes Brot. Mov Kebab ist authentischer Geschmack in Marlhenheim — schnell, großzügig und mit Leidenschaft gemacht.',
+    'hero.call': '📞 Bestellen', 'hero.menu': 'Unsere Karte',
+    'hero.badge1': 'Vor Ort', 'hero.badge2': 'Zum Mitnehmen', 'hero.badge3': 'Schneller Service',
+    'about.eyebrow': 'Unsere Geschichte', 'about.title1': 'Der', 'about.title2': 'authentische Geschmack',
+    'about.text': 'Ausgewähltes Fleisch, handverlesene Gewürze und sorgfältig überlieferte Rezepte. Bei Mov Kebab in Marlhenheim wird jedes Gericht mit Liebe zum Detail und dem Stolz des Hausgemachten zubereitet.',
+    'about.stat1': 'Frisches Fleisch', 'about.stat2': 'Die ganze Woche geöffnet', 'about.stat3': 'Hausgemacht', 'about.stat4': 'Jahre Erfahrung',
+    'services.eyebrow': 'Unsere Leistungen', 'services.title1': 'Was wir', 'services.title2': 'anbieten',
+    'services.card1.title': 'Kebab & Sandwiches', 'services.card1.text': 'Unsere Klassiker: Kebab im Brot, Teller, Sandwich — jeder großzügig belegt.',
+    'services.card2.title': 'Hausgemachte Pommes', 'services.card2.text': 'Knusprige Pommes, frisch geschnitten und vor Ort gebacken.',
+    'services.card3.title': 'Zum Mitnehmen', 'services.card3.text': 'Bestellen und in wenigen Minuten abholen — sorgfältig verpackt.',
+    'services.card4.title': 'Gruppenbestellungen', 'services.card4.text': 'Bestellungen für Veranstaltungen, Geburtstage oder Teamessen — kontaktieren Sie uns.',
+    'menu.eyebrow': 'Unsere Karte', 'menu.title1': 'Unsere', 'menu.title2': 'Spezialitäten',
+    'menu.card1.title': 'Kebabs', 'menu.card1.text': 'Wrap, Teller, Sandwich — Rind, Hähnchen oder gemischt. Beladen, großzügig, unvergesslich.', 'menu.card1.link': 'Menü ansehen',
+    'menu.card2.title': 'Burger', 'menu.card2.text': 'Hausgemachte Burger mit frischem Steak, geschmolzenem Käse und knackigem Gemüse.', 'menu.card2.link': 'Entdecken',
+    'menu.card3.title': 'Beilagen', 'menu.card3.text': 'Goldene Pommes, frischer Salat, hausgemachte Soßen — alles für das perfekte Essen.', 'menu.card3.link': 'Ansehen',
+    'menu.cta': '📄 Vollständige Karte',
+    'hours.eyebrow': 'Öffnungszeiten', 'hours.title1': 'Wann Sie', 'hours.title2': 'uns finden',
+    'day.monday': 'Montag', 'day.tuesday': 'Dienstag', 'day.wednesday': 'Mittwoch', 'day.thursday': 'Donnerstag', 'day.friday': 'Freitag', 'day.saturday': 'Samstag', 'day.sunday': 'Sonntag',
+    'location.monday': 'Marlhenheim – Hauptstraße', 'location.tuesday': 'Marlhenheim', 'location.wednesday': 'Marlhenheim', 'location.thursday': 'Marlhenheim', 'location.friday': 'Marlhenheim', 'location.saturday': 'Marlhenheim', 'location.sunday': '—',
+    'hours.closed': 'Geschlossen',
+    'contact.eyebrow': 'Kontakt', 'contact.title': 'Besuchen Sie uns', 'contact.phone': 'Telefon', 'contact.address': 'Adresse', 'contact.payment': 'Zahlung',
+    'contact.location1': '1 Rue Griesmatt', 'contact.location2': '67520 Marlhenheim'
+  }
+};
+
+function applyLanguage(lang) {
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    const t = translations[lang];
+    if (t && t[key] !== undefined) el.textContent = t[key];
+  });
+}
+
+const select = document.getElementById('language-select');
+select.addEventListener('change', e => applyLanguage(e.target.value));
+applyLanguage('fr');
+
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.querySelector('.nav-links');
+hamburger.addEventListener('click', () => {
+  const open = navLinks.classList.toggle('open');
+  hamburger.setAttribute('aria-expanded', open);
+});
+document.querySelectorAll('.nav-links a').forEach(l => l.addEventListener('click', () => navLinks.classList.remove('open')));
+</script>
+
+</body>
+</html>
